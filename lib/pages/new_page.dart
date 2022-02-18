@@ -1,3 +1,5 @@
+// Tortorici Nico, 5CIA, 18/02/2022
+
 import 'package:flutter/material.dart';
 import 'package:todo/models/TodoItem.dart';
 
@@ -31,7 +33,8 @@ class _NewPageState extends State<NewPage> {
       body: 
       Padding(
         
-        padding: EdgeInsets.symmetric(horizontal: 50),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
+        // Il Form viene usato per la validazione
         child: Form(
           key: _formKey,
           child: Column(
@@ -41,6 +44,8 @@ class _NewPageState extends State<NewPage> {
                   border: UnderlineInputBorder(),
                   labelText: 'Titolo',
                 ),
+
+                // Ritorna una stringa se c'è un errore nella validazione.
                 validator: (value) {
 
                   if (value == null) return "Inserire un valore";
@@ -65,16 +70,15 @@ class _NewPageState extends State<NewPage> {
               ElevatedButton(
                 child: const Text('Aggiungi'),
                 onPressed: () {
-
-
-                  if (_formKey.currentState!.validate())
-                  {
-                      widget.callback(TodoItem(
+                  if (_formKey.currentState!.validate()) {
+                    widget.callback(
+                      TodoItem(
                         title: _titleController.text,
-                        description: _descriptionController.text,),);
+                        description: _descriptionController.text,
+                      ),
+                    );
 
-
-                      Navigator.of(context).pop(true);
+                    Navigator.of(context).pop(true);
                   }
                 },
               )

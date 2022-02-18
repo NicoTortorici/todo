@@ -1,3 +1,5 @@
+// Tortorici Nico, 5CIA, 18/02/2022
+
 import 'package:flutter/material.dart';
 import 'package:todo/pages/new_page.dart';
 
@@ -10,7 +12,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -35,9 +36,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final List<TodoItem> _items = [
     TodoItem(title: 'Fare la spesa', description: 'Fare la spesa, ecc, ecc,'),
-    TodoItem(title: 'Fare la spesa 2', description: 'Fare la spesa 2, ecc, ecc,')
+    TodoItem(
+        title: 'Fare la spesa 2', description: 'Fare la spesa 2, ecc, ecc,'),
   ];
 
+  /// Aggiunge un oggetto alla lista.
   void _addTodo(TodoItem item) {
     setState(() {
       _items.add(item);
@@ -52,13 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
       content: Text(text),
       action: SnackBarAction(
         label: 'Ok',
-        onPressed: () =>
-            ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+        onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
       ),
     );
+
     ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,19 +72,26 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView.builder(
           itemCount: _items.length,
           itemBuilder: (context, index) {
-            var todo = _items[index];
+            final todo = _items[index];
 
-            return ListTile(title: Text(todo.title), subtitle: Text(todo.description), onTap: () {
-              showDialog(
+            return ListTile(
+              title: Text(todo.title),
+              subtitle: Text(todo.description),
+              onTap: () {
+                showDialog(
                   context: context,
                   builder: (ctx) => AlertDialog(
                     title: Text(todo.title),
                     content: Text(todo.description),
-                    actions: <Widget> [
+                    actions: <Widget>[
                       ElevatedButton(
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.resolveWith((states) => Colors.red),),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.resolveWith(
+                              (states) => Colors.red),
+                        ),
                         child: const Text('Rimuovi'),
                         onPressed: () {
+                          // Rimuovi l'oggetto.
                           setState(() => _items.remove(todo));
                           Navigator.of(ctx).pop(true);
                           _showSnackbar('Rimosso ${todo.title}', 2);
@@ -91,20 +100,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       ElevatedButton(
                         autofocus: true,
                         child: const Text('Ok'),
-                        onPressed: () =>
-                            Navigator.of(ctx).pop(true),
+                        onPressed: () => Navigator.of(ctx).pop(true),
                       )
-                    ] ,
-                  )
-              );
-
-            },);
+                    ],
+                  ),
+                );
+              },
+            );
           },
         ),
-
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => NewPage(_addTodo))),
+        onPressed: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => NewPage(_addTodo))),
         tooltip: 'Aggiungi Todo',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
