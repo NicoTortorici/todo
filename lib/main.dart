@@ -1,6 +1,7 @@
 // Tortorici Nico, 5CIA, 18/02/2022
 
 import 'package:flutter/material.dart';
+import 'package:todo/pages/info_page.dart';
 import 'package:todo/pages/new_page.dart';
 
 import 'models/TodoItem.dart';
@@ -67,6 +68,22 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const InfoPage()));
+              },
+              child: Icon(
+                Icons.info_outline,
+                color: Colors.white.withOpacity(0.75),
+                size: 26.0,
+              ),
+            ),
+          ),
+        ],
+
       ),
       body: Center(
         child: ListView.builder(
